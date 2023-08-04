@@ -2,27 +2,36 @@
 import Card from 'antd/es/card/Card';
 import classes from './Dashboard.module.css';
 import { useState } from 'react';
-//import Forms from './Forms';
-//import ElectricianMap from './ElectricianMap';
 import UserRegister from './UserRegister';
 import { Modal } from 'antd';
-import { collection, addDoc} from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 
 const Plumber = ({ plumberData }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [modalOpen, setModalOpen] = useState(false);
+    
     const showModal = () => {
         setIsModalOpen(true);
     };
     const handleOk = () => {
         setIsModalOpen(false);
+        setModalOpen(true);
+    };
+    const handleOk2 = () => {
+
+        setModalOpen(false);
     };
     const handleCancel = () => {
         setIsModalOpen(false);
-        // setFormData({ name: '', email: '', phone: '' });
+       
+    };
+    const handleCancel2 = () => {
+
+        setModalOpen(false);
+
     };
 
     const onFinish = async (values) => {
@@ -60,15 +69,20 @@ const Plumber = ({ plumberData }) => {
 
         <>
             {/* <Forms isModalOpen={isModalOpen} handleCancel={handleCancel}/> */}
+            <Modal title="Sign-In Required" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <p>You have to sign-in first!</p>
 
-{isModalOpen && (
-    <Modal open={isModalOpen}
-    onCancel={handleCancel}
-    onOk={handleOk}
-    >
-                <UserRegister 
-                plumberData={plumberData}
-                handleOk={handleOk} handleCancel={handleCancel} /></Modal>)}
+            </Modal>
+
+            {modalOpen && (
+                <Modal open={modalOpen}
+                    onCancel={handleCancel2}
+                   
+                >
+                    <UserRegister
+                        plumberData={plumberData}
+                        type='plumber'
+                        handleOk={handleOk2} handleCancel={handleCancel2} /></Modal>)}
 
             <Card
 
@@ -87,7 +101,7 @@ const Plumber = ({ plumberData }) => {
                 <p>City: {plumberData.city}</p>
                 <p>Specialization: {plumberData.specialization}</p>
                 <p>Gender: {plumberData.gender}</p>
-     
+
 
 
                 <div className={classes.actions}>
@@ -96,7 +110,7 @@ const Plumber = ({ plumberData }) => {
                         Book
                     </button>
                 </div>
-                
+
             </Card>
 
 

@@ -15,7 +15,10 @@ import CarpenterMap from './Components/CarpenterMap';
 import ElectricianMap from './Components/ElectricianMap';
 import PlumberMap from './Components/PlumberMap';
 import UserTable from './Components/userTable';
-
+import ElectricianDetail from './Components/ElectricianDetail';
+import AppointmentTable from './Components/AppointmentTable';
+import BookingForm from './Components/BookingForm';
+import ServiceProviderUpdate from './Components/ServiceProviderUpdate';
 
 function App() {
 
@@ -38,6 +41,10 @@ function App() {
           <Route path="/service-provider" element={<ServiceProviderRegister />} />
           <Route path="/usertable" element={<UserTable />} />
           <Route path="/tab" element={<TabComponent />} />
+          <Route path="/electrician-details" element={<ElectricianDetail />} />
+          <Route path="/appointment" element={<AppointmentTable/>} />
+          <Route path="/booking" element={<BookingForm/>}/>
+          <Route path='/provider-update' element={<ServiceProviderUpdate/>}/>
         </Routes>
       </BrowserRouter>
     </div>

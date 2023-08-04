@@ -4,13 +4,13 @@ import { getAuth,createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
  const vendorSystem = {
-  apiKey: "AIzaSyCiIyUp9hdH5gvp17WQNAsVr7bLqpwN8bU",
-  authDomain: "http-react-a19ac.firebaseapp.com",
-  databaseURL: "https://http-react-a19ac-default-rtdb.firebaseio.com",
-  projectId: "http-react-a19ac",
-  storageBucket: "http-react-a19ac.appspot.com",
-  messagingSenderId: "696048582382",
-  appId: "1:696048582382:web:be306514c179bc2b23fdff"
+  apiKey: "AIzaSyCNxN1GBOEjL6Zc7OuFROaawNhqLPoBOuk",
+  authDomain: "vendorsystem-9d2c9.firebaseapp.com",
+  projectId: "vendorsystem-9d2c9",
+  storageBucket: "vendorsystem-9d2c9.appspot.com",
+  messagingSenderId: "653315083444",
+  appId: "1:653315083444:web:88356617d3eb92fcad1be1",
+  measurementId: "G-F3NPDCENV8"
 };
 const app = initializeApp(vendorSystem);
 const db = getFirestore(app);

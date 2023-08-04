@@ -5,12 +5,13 @@ import Electrician from "./Electrician";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Row, Col,Input } from 'antd';
+const { Search } = Input;
 
 const ElectricianMap = () => {
   const [electricianData, setElectricianData] = useState({});
 
   useEffect(() => {
-    // Fetch data from the database and update the state with the data.
+  
     const fetchElectricianData = async () => {
       try {
         const electriciansCollectionRef = collection(db, 'serviceProviders');
@@ -28,6 +29,11 @@ const ElectricianMap = () => {
 
     fetchElectricianData();
   }, []);
+
+  const onSearch = (searchText) => {
+    const filteredData = electricianData.filter(obj =>obj.firstname.includes(searchText));
+    setElectricianData(filteredData);
+  };
   if (!Array.isArray(electricianData)) {
     return <p>Loading...</p>;
   }
@@ -43,12 +49,15 @@ const ElectricianMap = () => {
     <>
       <h1>ELECTRICIAN'S</h1>
       <div>
-      <Input.Search
-          placeholder="Search by name"
-          enterButton="Search"
-          onSearch={handleSearch}
-          style={{ marginBottom: 16 }}
-        />
+      <Search
+    style={{ width: '300px', marginBottom: '16px' }}
+      placeholder="input search text"
+      allowClear
+      enterButton="Search"
+      size="large"
+      onSearch={onSearch}
+    />
+     
         <Row gutter={[16, 16]}>
           {electricianData.map((electrician) => (
             <Col key={electrician.id} span={8}>

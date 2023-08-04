@@ -41,7 +41,6 @@ const ServiceProviderRegister = (props) => {
         });
     }, [form, props]);
 
-
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
     const [address, setAddress] = useState('');
@@ -118,6 +117,7 @@ const ServiceProviderRegister = (props) => {
         } catch (error) {
             console.error('Registration error:', error);
         }
+        
     };
 
     return (
@@ -160,7 +160,7 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input value={firstname} onChange={(event) => { setFirstName(event.target.value) }} />
+                        <Input value={firstname} onChange={(event) => { setFirstName(event.target.value) }} defaultValue={props.electricianData.firstname} />
                     </Form.Item>
 
                     <Form.Item
@@ -173,7 +173,7 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input value={lastname} onChange={(event) => { setLastName(event.target.value) }} />
+                        <Input value={lastname} onChange={(event) => { setLastName(event.target.value) }} defaultValue={props.electricianData.lastname} />
                     </Form.Item>
 
                     <Form.Item
@@ -186,7 +186,7 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input value={address} onChange={(event) => { setAddress(event.target.value) }} />
+                        <Input value={address} onChange={(event) => { setAddress(event.target.value) }} defaultValue={props.electricianData.address}/>
                     </Form.Item>
 
                     <Form.Item
@@ -199,7 +199,7 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input value={mobile} onChange={(event) => { setMobile(event.target.value) }} />
+                        <Input value={mobile} onChange={(event) => { setMobile(event.target.value) }} defaultValue={props.electricianData.mobile} />
                     </Form.Item>
 
                     <Form.Item
@@ -212,7 +212,7 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input value={city} onChange={(event) => { setCity(event.target.value) }} />
+                        <Input value={city} onChange={(event) => { setCity(event.target.value) }} defaultValue={props.electricianData.city}/>
                     </Form.Item>
 
 
@@ -227,7 +227,7 @@ const ServiceProviderRegister = (props) => {
                         ]}
                     >
                         <Select
-                            defaultValue="select"
+                            defaultValue={props.electricianData.specialization}
                             style={{
                                 width: 350,
                             }}
@@ -254,11 +254,12 @@ const ServiceProviderRegister = (props) => {
                         ]}
                     >
                         <Select
-                            defaultValue="select"
+                           // defaultValue="select"
                             style={{
                                 width: 350,
                             }}
                             value={gender}
+                            defaultValue={props.electricianData.gender}
                             onChange={(value) => setGender(value)}
                         >
                             <Option value="male">Male</Option>
@@ -278,7 +279,7 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input value={email} onChange={(event) => { setEmail(event.target.value) }} />
+                        <Input value={email} onChange={(event) => { setEmail(event.target.value) }} defaultValue={props.electricianData.email}/>
                     </Form.Item>
                     <Form.Item
                         noStyle
@@ -297,7 +298,7 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input.Password value={password} onChange={(event) => { setPassword(event.target.value) }} />
+                        <Input.Password value={password} onChange={(event) => { setPassword(event.target.value) }} defaultValue={props.electricianData.password}/>
                     </Form.Item>
 
                     {/* <Form.Item

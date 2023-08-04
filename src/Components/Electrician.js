@@ -2,31 +2,56 @@
 import Card from 'antd/es/card/Card';
 import classes from './Dashboard.module.css';
 import { useState } from 'react';
-import ElectricianMap from './ElectricianMap';
 import UserRegister from './UserRegister';
-import { Modal } from 'antd';
-import { collection, addDoc} from 'firebase/firestore';
+import { Button, Modal } from 'antd';
+import { collection, addDoc, updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
+import { Link } from 'react-router-dom';
 
 
 const Electrician = ({ electricianData }) => {
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+   const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    // const handleBookElectrician = async (userId) => {
+    //     try {
+    //         const userRef = doc(db, 'users', userId);
+    //         await updateDoc(userRef, { type: 'electrician' });
+    //     } catch (error) {
+    //         console.error('Error booking electrician:', error);
+    //     }
+    // };
 
     const showModal = () => {
+        // handleBookElectrician(electricianData.id)
         setIsModalOpen(true);
+
     };
+
     const handleOk = () => {
         setIsModalOpen(false);
+        setModalOpen(true);
+
+    };
+    const handleOk2 = () => {
+
+        setModalOpen(false);
     };
     const handleCancel = () => {
         setIsModalOpen(false);
-        // setFormData({ name: '', email: '', phone: '' });
+
+
+    };
+    const handleCancel2 = () => {
+
+        setModalOpen(false);
+
     };
 
     const onFinish = async (values) => {
         try {
-            // ... Firebase authentication code ...
+
             const firstname = values.firstname;
             const address = values.address;
             const mobile = values.mobile;
@@ -44,11 +69,11 @@ const Electrician = ({ electricianData }) => {
                 specialization,
                 gender,
 
-                // Add any other data you want to store for the electrician
+
             });
             setIsModalOpen(false);
 
-            // ... Clear form fields and close the modal ...
+
 
         } catch (error) {
             console.error('Registration error:', error);
@@ -58,16 +83,24 @@ const Electrician = ({ electricianData }) => {
 
 
         <>
-            {/* <Forms isModalOpen={isModalOpen} handleCancel={handleCancel}/> */}
 
-{isModalOpen && (
-    <Modal open={isModalOpen}
-    onCancel={handleCancel}
-    onOk={handleOk}
-    >
-                <UserRegister 
-                electricianData={electricianData}
-                handleOk={handleOk} handleCancel={handleCancel} /></Modal>)}
+            <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <Link to="/"> You have already login??Login here!!!!</Link>
+
+                <p>Sign-up required first...</p>
+
+            </Modal>
+
+
+            {modalOpen && (
+                <Modal open={modalOpen}
+                    onCancel={handleCancel2}
+
+                >
+                    <UserRegister
+                        electricianData={electricianData}
+                        type='electrician'
+                        handleOk={handleOk2} handleCancel={handleCancel2} /></Modal>)}
 
             <Card
 
@@ -86,7 +119,7 @@ const Electrician = ({ electricianData }) => {
                 <p>City: {electricianData.city}</p>
                 <p>Specialization: {electricianData.specialization}</p>
                 <p>Gender: {electricianData.gender}</p>
-     
+
 
 
                 <div className={classes.actions}>
@@ -95,7 +128,7 @@ const Electrician = ({ electricianData }) => {
                         Book
                     </button>
                 </div>
-                
+
             </Card>
 
 

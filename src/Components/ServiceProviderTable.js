@@ -68,10 +68,10 @@ const ServiceProviderTable = () => {
     const cancel = () => {
         setEditingKey('');
     };
-    const save = async (email, id) => {
+    const save = async (email,id) => {
         try {
             const row = await form.validateFields();
-            await updateDoc(doc(db, 'serviceProviders', id), row);
+          await updateDoc(doc(db, 'serviceProviders', id), row);
             const newData = [...data];
             const index = newData.findIndex((item) => email === item.email);
             if (index > -1) {
@@ -102,7 +102,7 @@ const ServiceProviderTable = () => {
 
                 const usersData = querySnapshot.docs.map((doc) => ({
                     ...doc.data(),
-                    id: doc.id, // Add the 'id' property to the data
+                    id: doc.id, 
                 }));
                 setData(usersData);
             } catch (error) {
@@ -112,6 +112,7 @@ const ServiceProviderTable = () => {
 
         fetchUsers();
     }, []);
+
     const handleDelete = async (email, id) => {
         try {
             const db = getFirestore(app);
@@ -168,16 +169,25 @@ const ServiceProviderTable = () => {
             title: 'Actions',
             dataIndex: 'actions',
             render: (_, record) => {
-                const editable = record.email === editingKey;
+                const editable = isEditing(record);
                 return editable ? (
                     <span>
-                        <Button type="primary" onClick={() => save(record.email, record.id)}>
-                            Save
-                        </Button>
-                        <Button onClick={cancel}>Cancel</Button>
-                    </span>
+                    <Typography.Link
+                      onClick={() => save(record.email,record.id,)}
+                      style={{
+                        marginRight: 8,
+                      }}
+                    >
+                      Save
+                    </Typography.Link>
+                    <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+                      <a>Cancel</a>
+                    </Popconfirm>
+                  </span>
                 ) : (
-                    <Button onClick={() => edit(record)}>Edit</Button>
+                    <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+            Edit
+          </Typography.Link>
                 );
             },
         },
@@ -218,9 +228,9 @@ const ServiceProviderTable = () => {
     };
 
     return (
-        <>
-        {/* <Form form={form} component={false} > */}
-            <h1><center>Service Provider's details</center></h1>
+
+         <Form form={form} component={false} > 
+            
             <Table
 
                 style={tableStyles}
@@ -240,8 +250,8 @@ const ServiceProviderTable = () => {
                     onChange: cancel,
                 }}
             />
-       {/*  </Form> */}
-        </>
+        </Form>
+   
     );
 };
 export default ServiceProviderTable;

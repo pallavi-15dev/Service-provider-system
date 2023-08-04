@@ -11,16 +11,28 @@ import { db } from '../firebase';
 const Carpenter = ({ carpenterData }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+
 
     const showModal = () => {
         setIsModalOpen(true);
     };
     const handleOk = () => {
         setIsModalOpen(false);
+        setModalOpen(true);
+    };
+    const handleOk2 = () => {
+
+        setModalOpen(false);
     };
     const handleCancel = () => {
         setIsModalOpen(false);
-        // setFormData({ name: '', email: '', phone: '' });
+        
+    };
+    const handleCancel2 = () => {
+
+        setModalOpen(false);
+
     };
 
     const onFinish = async (values) => {
@@ -58,15 +70,19 @@ const Carpenter = ({ carpenterData }) => {
 
         <>
             {/* <Forms isModalOpen={isModalOpen} handleCancel={handleCancel}/> */}
+            <Modal title="Sign-In Required" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <p>You have to sign-in first!</p>
 
-{isModalOpen && (
-    <Modal open={isModalOpen}
-    onCancel={handleCancel}
-    onOk={handleOk}
+            </Modal>
+{modalOpen && (
+    <Modal open={modalOpen}
+    onCancel={handleCancel2}
+  
     >
                 <UserRegister 
                 carpenterData={carpenterData}
-                handleOk={handleOk} handleCancel={handleCancel} /></Modal>)}
+                type='carpenter'
+                handleOk={handleOk2} handleCancel={handleCancel2} /></Modal>)}
 
             <Card
 

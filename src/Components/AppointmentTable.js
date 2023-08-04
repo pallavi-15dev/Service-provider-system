@@ -5,6 +5,14 @@ import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
 import { db } from '../firebase';
 import { collection, getDocs, doc, deleteDoc, getFirestore, updateDoc } from 'firebase/firestore';
 import app from '../firebase';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+
+
+
+dayjs.extend(customParseFormat);
+
 
 const originData = [];
 
@@ -43,32 +51,33 @@ const EditableCell = ({
     </td>
   );
 };
-const UserTable = () => {
+const AppointmentTable = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState(originData);
   const [editingKey, setEditingKey] = useState('');
   
-  const isEditing = (record) => record.email === editingKey;
+  const isEditing = (record) => record.firstname === editingKey;
   const edit = (record) => {
     form.setFieldsValue({
       firstname: '',
       lastname: '',
       address: '',
       mobile:'',
-      email:'',
+      date:'',
+      
       ...record,
     });
-    setEditingKey(record.email);
+    setEditingKey(record.firstname);
   };
   const cancel = () => {
     setEditingKey('');
   };
-  const save = async (email,id) => {
+  const save = async (firstname,id) => {
     try {
       const row = await form.validateFields();
-    await updateDoc(doc(db, 'users',id), row);
+     await updateDoc(doc(db, 'appointments',id), row);
       const newData = [...data];
-      const index = newData.findIndex((item) => email === item.email);
+      const index = newData.findIndex((item) => firstname === item.firstname);
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, {
@@ -91,7 +100,7 @@ const UserTable = () => {
             const fetchUsers = async () => {
     
                 try {
-                    const usersCollectionRef = collection(db, 'users');
+                    const usersCollectionRef = collection(db, 'appointments');
                     const querySnapshot = await getDocs(usersCollectionRef);
     
                     const usersData = querySnapshot.docs.map((doc) => ({
@@ -108,11 +117,12 @@ const UserTable = () => {
     
             fetchUsers();
         }, []);
-        const handleDelete = async (email, id) => {
+
+        const handleDelete = async (firstname, id) => {
             try {
                 const db = getFirestore(app);
-                await deleteDoc(doc(db, 'users', id));
-                const newData = data.filter((item) => item.email !== email);
+                await deleteDoc(doc(db, 'appointments', id));
+                const newData = data.filter((item) => item.firstname !== firstname);
                 setData(newData);
                 message.success('Data deleted successfully!');
             } catch (error) {
@@ -137,21 +147,29 @@ const UserTable = () => {
     {
       title: 'Address',
       dataIndex: 'address',
-      width: '40%',
+      width: '15%',
       editable: true,
     },
     {
         title: 'Mobile',
         dataIndex: 'mobile',
-        width: '40%',
+        width: '15%',
         editable: true,
       },
       {
-        title: 'Email',
-        dataIndex: 'email',
-        width: '40%',
+        title: 'Date',
+        dataIndex: 'date',
+        width: '15%',
         editable: true,
+        render: (selectedDate) => dayjs(selectedDate.toDate()).format('YYYY-MM-DD HH:mm:ss'),
       },
+      // {
+      //   title: 'Time',
+      //   dataIndex: 'time',
+      //   width: '15%',
+      //   editable: true,
+      //   render: (selectedTime) => dayjs(selectedTime).format('HH:mm'),
+      // },
     {
       title: 'operation',
       dataIndex: 'operation',
@@ -160,7 +178,7 @@ const UserTable = () => {
         return editable ? (
           <span>
             <Typography.Link
-              onClick={() => save(record.email,record.id,)}
+              onClick={() => save(record.firstname,record.id,)}
               style={{
                 marginRight: 8,
               }}
@@ -182,7 +200,7 @@ const UserTable = () => {
         title: 'Delete',
         dataIndex: 'delete',
         render: (_, record) => (
-            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.email, record.id,)}>
+            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.firstname,record.id,)}>
                 <a>Delete</a>
             </Popconfirm>
 
@@ -231,4 +249,4 @@ const UserTable = () => {
     </Form>
   );
 };
-export default UserTable;
+export default AppointmentTable;

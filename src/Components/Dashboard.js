@@ -11,16 +11,12 @@ const Dashboard = () => {
     const showModal = () => {
         setIsModalOpen(true);
     };
-    // const handleOk = () => {
-    //     setIsModalOpen(false);
-    // };
     const handleCancel = () => {
         setIsModalOpen(false);
        
     };
     return(
-  
-   <Card>
+  <Card>
     <h1><u>Our Service Provider</u> </h1>
  
   <Row>
@@ -42,8 +38,6 @@ const Dashboard = () => {
         <p>5.Wiring and Rewiring</p>
         <p>6.Washer and Dryer Hookups</p>
         <Link to="/electrician"> More!!!</Link>
-        {/* <button onClick={showModal}>More</button>
-        {isModalOpen && <Electrician handleCancel={handleCancel} />} */}
       </Card  >
     </Col>
    

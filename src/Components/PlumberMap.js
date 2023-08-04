@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import React, { useState } from "react";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Row, Col } from 'antd';
+import { Row, Col,Input } from 'antd';
 import Plumber from "./Plumber";
-
+const { Search } = Input;
 const PlumberMap = () => {
 
     const [plumberData, setPlumberData] = useState({});
@@ -28,6 +28,11 @@ const PlumberMap = () => {
 
         fetchPlumberData();
     }, []);
+
+    const onSearch = (searchText) => {
+        const filteredData = plumberData.filter(obj =>obj.firstname.includes(searchText));
+        setPlumberData(filteredData);
+      };
     if (!Array.isArray(plumberData)) {
         // Add some fallback UI or loading state if the data is not an array yet
         return <p>Loading...</p>;
@@ -37,6 +42,14 @@ const PlumberMap = () => {
         <>
             <h1>PLUMBER'S</h1>
             <div>
+            <Search
+    style={{ width: '300px', marginBottom: '16px' }}
+      placeholder="input search text"
+      allowClear
+      enterButton="Search"
+      size="large"
+      onSearch={onSearch}
+    />
                 <Row gutter={[16, 16]}>
                     {plumberData.map((plumber) => (
                         <Col key={plumber.id} span={8}>

@@ -13,24 +13,11 @@ const Login = (event, props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-
-
     const navigate = useNavigate();
     const { isLoading, error, sendRequest: sendTaskRequest } = useHttp();
     const [form] = Form.useForm();
 
-    // const handleInputChange = (event) => {
-    //     const { name, value } = event.target;
-    //     setFormData((prevFormData) => ({
-    //       ...prevFormData,
-    //       [name]: value,
-    //     }));
-    //   };
-
-
     const handleSignIn = (email, password) => {
-
-        //const { email, password } = formData;
         console.log('Email:', email);
         console.log('Password:', password);
 
@@ -40,7 +27,7 @@ const Login = (event, props) => {
                     navigate('/tab');
                 }
                 else
-                    navigate('/dashboard');
+                    navigate('/electrician-details');
 
             })
             .catch((error) => {
@@ -133,7 +120,7 @@ const Login = (event, props) => {
                         <Input value={password} onChange={(event) => setPassword(event.target.value)} />
                     </Form.Item>
                     <Form.Item>
-                         <Button type="primary" className="login-form-button" onClick={() => handleSignIn(email, password)}>
+                        <Button type="primary" className="login-form-button" onClick={() => handleSignIn(email, password)}>
                             LOGIN
                         </Button>
                         <br /><br />
