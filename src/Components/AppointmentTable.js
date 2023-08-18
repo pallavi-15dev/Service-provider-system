@@ -64,7 +64,6 @@ const AppointmentTable = () => {
       address: '',
       mobile:'',
       date:'',
-      
       ...record,
     });
     setEditingKey(record.firstname);
@@ -161,15 +160,15 @@ const AppointmentTable = () => {
         dataIndex: 'date',
         width: '15%',
         editable: true,
-        render: (selectedDate) => dayjs(selectedDate.toDate()).format('YYYY-MM-DD HH:mm:ss'),
+        
       },
-      // {
-      //   title: 'Time',
-      //   dataIndex: 'time',
-      //   width: '15%',
-      //   editable: true,
-      //   render: (selectedTime) => dayjs(selectedTime).format('HH:mm'),
-      // },
+      {
+        title: 'Time',
+        dataIndex: 'time',
+        width: '15%',
+        editable: true,
+     
+      },
     {
       title: 'operation',
       dataIndex: 'operation',

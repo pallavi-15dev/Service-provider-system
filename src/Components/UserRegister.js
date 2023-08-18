@@ -5,10 +5,9 @@ import { auth } from '../firebase';
 import { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
-import {  DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import firebase from '../firebase';
+
 
 import { Timestamp } from 'firebase/firestore';
 
@@ -30,10 +29,6 @@ const UserRegister = (props) => {
             address: props.address,
             mobile: props.mobile,
             city: props.city,
-           // time: props.time,
-            date:props.date,
-          //type:props.type,
-            // Add other fields here
         });
     }, [form, props]);
 
@@ -44,8 +39,6 @@ const UserRegister = (props) => {
     const [mobile, setMobile] = useState('');
     const [city, setCity] = useState('');
     const [gender, setGender] = useState('');
-    //const [time, setTime] = useState();
-    const [date, setDate] = useState();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -56,9 +49,7 @@ const UserRegister = (props) => {
         console.log(address);
         console.log(mobile);
         console.log(city);
-        //console.log(time);
-        console.log(date);
-        console.log(email);
+       console.log(email);
         console.log(password);
 
     
@@ -67,11 +58,6 @@ const UserRegister = (props) => {
     const onFinish = async (values) => {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-            const { selectedTime } = values;
-           const firestoreDate = Timestamp.fromDate(new Date([date,selectedTime]));
-         // const firestoreTimestamp = Timestamp.fromDate(selectedTime.toDate());
-
             const usersCollectionRef = collection(db, 'users');
             await addDoc(usersCollectionRef, {
                 firstname,
@@ -79,17 +65,12 @@ const UserRegister = (props) => {
                 address,
                 mobile,
                 city,
-                //time:firestoreTimestamp,
-               date:firestoreDate,
-               // type:props.type,
                 gender,
                 email,
             });
 
-            // Clear the form fields after successful registration
+            
             form.resetFields();
-
-            // Close the modal after successful registration
             props.handleOk();
         } catch (error) {
             console.error('Registration error:', error);
@@ -215,29 +196,8 @@ const UserRegister = (props) => {
 
                         </Select>
                     </Form.Item>
-{/* 
-                    <Form.Item name="time" label="Select Time" value={time}>
 
-                        <TimePicker
-                        onChange={(time,timeString)=>setTime(timeString)}
-                            format="HH:mm"
-                            style={{
-                                width: '200px', borderRadius: '4px', border: '1px solid #ccc',
-                                padding: '8px'
-                            }}
-                        />
-                    </Form.Item> */}
-
-                    <Form.Item name="date" label="Select Date" value={date} >
-                        <DatePicker
-                           onChange={(date,dateString)=>setDate(dateString)}
-                            style={{ width: '200px', borderRadius: '4px', border: '1px solid #ccc', }}
-                        />
-                    </Form.Item>
-
-
-
-                    <Form.Item
+ <Form.Item
                         label="Email"
                         name="email"
                         rules={[

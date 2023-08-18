@@ -3,13 +3,10 @@ import { Card, Col, Row, Modal, Button } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { db, auth } from '../firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import ServiceProviderRegister from './ServiceProviderRegister';
-import ServiceProviderTable from './ServiceProviderTable';
 import ServiceProviderUpdate from './ServiceProviderUpdate';
 
 const ElectricianDetail = () => {
   const [electricianData, setElectricianData] = useState([]);
-  const [initialValues, setInitialValues] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 

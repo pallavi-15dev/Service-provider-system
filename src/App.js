@@ -19,6 +19,7 @@ import ElectricianDetail from './Components/ElectricianDetail';
 import AppointmentTable from './Components/AppointmentTable';
 import BookingForm from './Components/BookingForm';
 import ServiceProviderUpdate from './Components/ServiceProviderUpdate';
+import UserByServiceProvider from './Components/UserByServiceProvider';
 
 function App() {
 
@@ -45,6 +46,7 @@ function App() {
           <Route path="/appointment" element={<AppointmentTable/>} />
           <Route path="/booking" element={<BookingForm/>}/>
           <Route path='/provider-update' element={<ServiceProviderUpdate/>}/>
+          <Route path='/userbyprovider' element={<UserByServiceProvider/>}/>
         </Routes>
       </BrowserRouter>
     </div>

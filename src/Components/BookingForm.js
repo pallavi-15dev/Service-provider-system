@@ -36,6 +36,7 @@ const BookingForm = (props) => {
     const[time,setTime]=useState('');
     const[date,setDate]=useState('');
     const[selectedTime,setSelectedTime]=useState(null);
+    const[selectedDate,setSelectedDate]=useState(null);
    
 
 
@@ -43,7 +44,7 @@ const BookingForm = (props) => {
     const onFinish = async (values) => {
         try {
   
-            const firestoreDate = new Date(); 
+            const firestoreDate = new Date(selectedDate); 
             const firestoreTime = new Date(selectedTime);
         
 
@@ -173,7 +174,7 @@ const BookingForm = (props) => {
                     <Form.Item name="date" label="Select date" value={date}>
 
                         <DatePicker
-                           onChange={(date) => setDate(date)}
+                           onChange={(date) => setSelectedDate(date)}
                            
                             style={{
                                 width: '200px', borderRadius: '4px', border: '1px solid #ccc',
