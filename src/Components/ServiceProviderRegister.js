@@ -10,20 +10,12 @@ import { Button, Form, Input, Card, Space, Select } from 'antd';
 const { Option } = Select;
 
 
-const onFinish = (values) => {
-    console.log('Success:', values);
-};
 const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
 };
 
 const ServiceProviderRegister = (props) => {
 
-
-    const [selectedOption, setSelectedOption] = useState('');
-    const handleSelectChange = (value) => {
-        setSelectedOption(value);
-    };
 
 
     const [form] = Form.useForm();
@@ -36,8 +28,7 @@ const ServiceProviderRegister = (props) => {
             city: props.city,
             specialization: props.specialization,
             gender: props.gender,
-            //email:props.email,
-            // Add other fields here
+            
         });
     }, [form, props]);
 
@@ -53,7 +44,7 @@ const ServiceProviderRegister = (props) => {
 
 
 
-    const handleSignIn = async (event) => {
+    const handleSignIn = async () => {
         //event.preventDefault();
         console.log(firstname);
         console.log(lastname);
@@ -64,31 +55,6 @@ const ServiceProviderRegister = (props) => {
         console.log(gender);
         console.log(email);
         console.log(password);
-
-        try {
-
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-            const usersCollectionRef = collection(db, 'serviceProviders');
-            await addDoc(usersCollectionRef, {
-                firstname,
-                lastname,
-                address,
-                mobile,
-                city,
-                specialization,
-                gender,
-                email,
-                password,
-
-            });
-
-        } catch (error) {
-            console.error('Registration error:', error);
-
-        };
-
-
     };
 
     const onFinish = async (values) => {
@@ -131,6 +97,7 @@ const ServiceProviderRegister = (props) => {
             >
                 <h1>Service Provider Register</h1>
                 <Form
+                 form={form}
                     name="basic"
                     labelCol={{
                         span: 5,
@@ -160,7 +127,7 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input value={firstname} onChange={(event) => { setFirstName(event.target.value) }} defaultValue={props.electricianData.firstname} />
+                        <Input value={firstname} onChange={(event) => { setFirstName(event.target.value) }} />
                     </Form.Item>
 
                     <Form.Item
@@ -173,7 +140,7 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input value={lastname} onChange={(event) => { setLastName(event.target.value) }} defaultValue={props.electricianData.lastname} />
+                        <Input value={lastname} onChange={(event) => { setLastName(event.target.value) }}  />
                     </Form.Item>
 
                     <Form.Item
@@ -186,7 +153,7 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input value={address} onChange={(event) => { setAddress(event.target.value) }} defaultValue={props.electricianData.address}/>
+                        <Input value={address} onChange={(event) => { setAddress(event.target.value) }} />
                     </Form.Item>
 
                     <Form.Item
@@ -199,7 +166,7 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input value={mobile} onChange={(event) => { setMobile(event.target.value) }} defaultValue={props.electricianData.mobile} />
+                        <Input value={mobile} onChange={(event) => { setMobile(event.target.value) }}  />
                     </Form.Item>
 
                     <Form.Item
@@ -212,7 +179,7 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input value={city} onChange={(event) => { setCity(event.target.value) }} defaultValue={props.electricianData.city}/>
+                        <Input value={city} onChange={(event) => { setCity(event.target.value) }} />
                     </Form.Item>
 
 
@@ -227,7 +194,7 @@ const ServiceProviderRegister = (props) => {
                         ]}
                     >
                         <Select
-                            defaultValue={props.electricianData.specialization}
+                           
                             style={{
                                 width: 350,
                             }}
@@ -254,12 +221,11 @@ const ServiceProviderRegister = (props) => {
                         ]}
                     >
                         <Select
-                           // defaultValue="select"
                             style={{
                                 width: 350,
                             }}
                             value={gender}
-                            defaultValue={props.electricianData.gender}
+                           
                             onChange={(value) => setGender(value)}
                         >
                             <Option value="male">Male</Option>
@@ -279,7 +245,7 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input value={email} onChange={(event) => { setEmail(event.target.value) }} defaultValue={props.electricianData.email}/>
+                        <Input value={email} onChange={(event) => { setEmail(event.target.value) }}/>
                     </Form.Item>
                     <Form.Item
                         noStyle
@@ -298,19 +264,8 @@ const ServiceProviderRegister = (props) => {
                             },
                         ]}
                     >
-                        <Input.Password value={password} onChange={(event) => { setPassword(event.target.value) }} defaultValue={props.electricianData.password}/>
+                        <Input.Password value={password} onChange={(event) => { setPassword(event.target.value) }}/>
                     </Form.Item>
-
-                    {/* <Form.Item
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{
-                offset: 8,
-                span: 16,
-            }}
-        >
-            <Checkbox>Remember me</Checkbox>
-        </Form.Item> */}
 
                     <Form.Item
                         wrapperCol={{
